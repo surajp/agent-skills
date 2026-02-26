@@ -72,7 +72,7 @@ public with sharing class AccountSelector {
       SELECT Id, Name, Industry, AnnualRevenue
       FROM Account
       WHERE Id IN :accountIds
-      WITH SECURITY_ENFORCED
+      WITH USER_MODE
     ];
   }
 
@@ -664,7 +664,7 @@ public static List<Account> getAccounts(String industry) {
             SELECT Id, Name, Industry
             FROM Account
             WHERE Industry = :industry
-            WITH SECURITY_ENFORCED
+            WITH USER_MODE
         ];
     } catch (Exception e) {
         throw new AuraHandledException('Error retrieving accounts: ' + e.getMessage());
@@ -736,7 +736,7 @@ public void validateAccount(Account acc) {
 List<Account> accounts = [
     SELECT Id, Name
     FROM Account
-    WITH SECURITY_ENFORCED
+    WITH USER_MODE
 ];
 
 // Strip inaccessible fields before DML
@@ -1018,7 +1018,7 @@ Before submitting Apex code, verify:
 - [ ] Assertions use Assert class (not System.assertEquals)
 - [ ] Error handling implemented
 - [ ] Logging framework used (not System.debug)
-- [ ] Security keywords used (WITH SECURITY_ENFORCED)
+- [ ] Security keywords used (WITH USER_MODE or WITH SYSTEM_MODE)
 - [ ] JavaDoc comments for public methods
 - [ ] Consistent naming conventions
 - [ ] @TestVisible used for test dependencies
